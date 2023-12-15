@@ -1,16 +1,16 @@
-import React, {forwardRef, useImperativeHandle} from 'react';
-import {View, Text, TouchableOpacity, FlatList} from 'react-native';
+import React, { forwardRef, useImperativeHandle } from 'react';
+import { View, Text, TouchableOpacity, FlatList, Pressable } from 'react-native';
 import styles from './styles';
-import {isExist} from './helpers/isExist';
-import {mergeStyles} from './helpers/mergeStyles';
+import { isExist } from './helpers/isExist';
+import { mergeStyles } from './helpers/mergeStyles';
 import Input from './components/Input';
 import DropdownOverlay from './components/DropdownOverlay';
 import DropdownModal from './components/DropdownModal';
 import DropdownWindow from './components/DropdownWindow';
-import {useSelectDropdown} from './hooks/useSelectDropdown';
-import {useLayoutDropdown} from './hooks/useLayoutDropdown';
-import {useRefs} from './hooks/useRefs';
-import {findIndexInArr} from './helpers/findIndexInArr';
+import { useSelectDropdown } from './hooks/useSelectDropdown';
+import { useLayoutDropdown } from './hooks/useLayoutDropdown';
+import { useRefs } from './hooks/useRefs';
+import { findIndexInArr } from './helpers/findIndexInArr';
 
 const SelectDropdown = (
   {
@@ -53,7 +53,8 @@ const SelectDropdown = (
     searchPlaceHolderColor /* text color for search input placeholder */,
     renderSearchInputLeftIcon /* function returns React component for search input icon */,
     renderSearchInputRightIcon /* function returns React component for search input icon */,
-    onChangeSearchInputText /* function callback when the search input text changes, this will automatically disable the dropdown's interna search to be implemented manually outside the component  */,
+	onChangeSearchInputText /* function callback when the search input text changes, this will automatically disable the dropdown's interna search to be implemented manually outside the component  */,
+	addNew
   },
   ref,
 ) => {
@@ -126,21 +127,22 @@ const SelectDropdown = (
   const renderSearchView = () => {
     return (
       search && (
-        <Input
-          searchViewWidth={buttonLayout.w}
-          value={searchTxt}
-          valueColor={searchInputTxtColor}
-          placeholder={searchPlaceHolder}
-          placeholderTextColor={searchPlaceHolderColor}
-          onChangeText={txt => {
-            setSearchTxt(txt);
-            disabledInternalSearch && onChangeSearchInputText(txt);
-          }}
-          inputStyle={searchInputStyle}
-          inputTextStyle={searchInputTxtStyle}
-          renderLeft={renderSearchInputLeftIcon}
-          renderRight={renderSearchInputRightIcon}
-        />
+          <Input
+            searchViewWidth={buttonLayout.w}
+            value={searchTxt}
+            valueColor={searchInputTxtColor}
+            placeholder={searchPlaceHolder}
+            placeholderTextColor={searchPlaceHolderColor}
+            onChangeText={txt => {
+              setSearchTxt(txt);
+              disabledInternalSearch && onChangeSearchInputText(txt);
+			}}
+            inputStyle={searchInputStyle}
+            inputTextStyle={searchInputTxtStyle}
+            renderLeft={renderSearchInputLeftIcon}
+			renderRight={renderSearchInputRightIcon}
+			addNew={addNew}
+			/>
       )
     );
   };
