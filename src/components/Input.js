@@ -1,6 +1,7 @@
 import React from 'react';
 import {forwardRef} from 'react';
-import {View, TextInput, StyleSheet, I18nManager} from 'react-native';
+import {View, TextInput, StyleSheet, I18nManager, Pressable} from 'react-native';
+import { Feather } from '@expo/vector-icons';
 
 const voidFunction = () => {};
 
@@ -19,7 +20,8 @@ const Input = (
     onSubmitEditing,
     renderLeft,
     renderRight,
-    testID,
+	testID,
+	addNew,
   },
   ref,
 ) => {
@@ -74,9 +76,16 @@ const Input = (
           allowFontScaling={false}
           autoComplete={'off'}
           autoCorrect={false}
-          autoCapitalize={'none'}
+          autoCapitalize={'characters'}
           autoFocus={true}
-        />
+		/>
+
+		<Pressable onPress={() => {
+			addNew();
+			console.log('Search Text: ', defaults.value);
+		}} style={{ alignSelf: 'center' }}>
+			<Feather name="check" size={22} color={'blue'} />
+		</Pressable>
         {defaults.renderRight && <View style={styles.pressableRight}>{defaults.renderRight()}</View>}
       </View>
     </View>
@@ -108,7 +117,8 @@ const styles = StyleSheet.create({
   pressableLeft: {
     height: '100%',
     marginRight: '4%',
-    justifyContent: 'center',
+	  justifyContent: 'space-between',
+	alignItems: 'center'
   },
   pressableRight: {
     height: '100%',
